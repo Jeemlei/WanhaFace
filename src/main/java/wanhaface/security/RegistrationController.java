@@ -34,7 +34,7 @@ public class RegistrationController {
             return "redirect:/register";
         }
         
-        if (path.isEmpty() || path.isBlank()) {
+        if (path.isEmpty() || path.trim().equals("")) {
             path = username;
         }
         

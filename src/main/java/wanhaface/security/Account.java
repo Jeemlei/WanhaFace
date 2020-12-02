@@ -14,6 +14,8 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Entity
 public class Account extends AbstractPersistable<Long> {
     
+    private String name;
     private String username;
     private String password;
+    private String path;
 }

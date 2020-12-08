@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/security/tags">
+    <head th:fragment="head(title)" lang="en">
+        <meta charset="UTF-8" />
+        <title th:text="${title}">Title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+    </head>
+    <body>
+        <header class="container" th:fragment="header">
+            <br/>
+            <div class="row">
+                <div class="col">
+                    <a th:href="@{/home}">Home</a>
+                </div>
+                <div class="col" sec:authorize="isAnonymous()">
+                    <a th:href="@{/register}">Register</a>
+                </div>
+                <div class="col" sec:authorize="isAnonymous()">
+                    <a th:href="@{/profile}">Login</a>
+                </div>
+                <div class="col" sec:authorize="isAuthenticated()">
+                    <a th:href="@{/profile}">Profile</a>
+                </div>
+                <div class="col" sec:authorize="isAuthenticated()">
+                    <a th:href="@{/logout}">Logout</a>
+                </div>
+            </div>
+        </header>
+
+    </body>
+</html>

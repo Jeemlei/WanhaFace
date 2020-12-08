@@ -1,4 +1,4 @@
-package wanhaface.security;
+package wanhaface.data;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;

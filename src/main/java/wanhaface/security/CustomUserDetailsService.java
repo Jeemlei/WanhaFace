@@ -1,5 +1,7 @@
 package wanhaface.security;
 
+import wanhaface.data.AccountRepository;
+import wanhaface.data.Account;
 import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

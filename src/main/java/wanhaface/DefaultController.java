@@ -1,6 +1,7 @@
 package wanhaface;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
@@ -16,7 +17,8 @@ public class DefaultController {
     }
    
     @GetMapping("/home")
-    public String home() {
+    public String home(Model model) {
+        model.addAttribute("title", "WanhaFace");
         return "index";
     }
 }

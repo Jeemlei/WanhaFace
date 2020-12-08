@@ -1,11 +1,15 @@
 package wanhaface.security;
 
+import java.util.ArrayList;
+import wanhaface.data.Account;
+import wanhaface.data.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.ui.Model;
 
 /**
  *
@@ -21,7 +25,8 @@ public class RegistrationController {
     private PasswordEncoder passwordEncoder;
 
     @GetMapping("/register")
-    public String registrationPage() {
+    public String registrationPage(Model model) {
+        model.addAttribute("title", "Register");
         return "register";
     }
 
@@ -38,9 +43,10 @@ public class RegistrationController {
             path = username;
         }
         
-        Account a = new Account(name, username, passwordEncoder.encode(password), path);
+        Account a = new Account(name, username, passwordEncoder.encode(password),
+                path, new ArrayList<Account>(), new ArrayList<Account>());
         accountRepository.save(a);
         
-        return "redirect:/login";
+        return "redirect:/profile";
     }
 }

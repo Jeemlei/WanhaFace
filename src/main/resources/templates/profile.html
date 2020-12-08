@@ -8,13 +8,41 @@
         <div th:replace="fragments/layout :: header"></div>
         <br/>
         <div class="container">
-            <h1 th:text="${name}">Name</h1>
-            <h5 th:text="${username}">username</h5>
+            <div class="row">
+                <div class="col-3">
+                    <h1 th:text="${name}">Name</h1>
+                    <h5 th:text="${username}">username</h5>
 
-            <div  th:if="${isNotFriend}">
-                <form th:action="@{/profile/{path}(path=${path})}" method="POST">
-                    <input type="submit" class="btn btn-primary" value="Friend request"/>
-                </form>
+                    <div th:if="${!requestSent} and ${!isOwnProfile}">
+                        <form th:action="@{/request/{path}(path=${path})}" method="POST">
+                            <input type="submit" class="btn btn-primary" value="Friend request"/>
+                        </form>
+                    </div>
+                </div>
+
+                <div th:if="${isOwnProfile}" class="col">
+                    <h4>Friend requests:</h4>
+                    <ul>
+                        <li th:each="account : ${friendRequests}">
+                            <div class="row">
+                                <div class="col-3">
+                                    <span th:text="${account.name}">name</span> 
+                                    (<a th:href="@{/profile/{path}(path=${account.path})}">@<span th:text="${account.username}">username</span></a>)
+                                </div>
+                                <div class="col-2">
+                                    <form th:action="@{/accept/{path}(path=${account.path})}" method="POST">
+                                        <input type="submit" class="btn btn-success mb-2" value="Accept"/>
+                                    </form>
+                                </div>
+                                <div class="col-1">
+                                    <form th:action="@{/decline/{path}(path=${account.path})}" method="POST">
+                                        <input type="submit" class="btn btn-danger mb-2" value="Decline"/>
+                                    </form>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </body>

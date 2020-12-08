@@ -24,9 +24,15 @@ public class ProfileController {
     @GetMapping("/profile")
     public String profile(Model model) {
         String username =  SecurityContextHolder.getContext().getAuthentication().getName();
+        Account account = accountRepository.findByUsername(username);
+        
         model.addAttribute("title", "Profile: " + username);
-        model.addAttribute("name", accountRepository.findByUsername(username).getName());
+        model.addAttribute("name", account.getName());
         model.addAttribute("username", "@" + username);
+        model.addAttribute("requestSent", true);
+        model.addAttribute("isOwnProfile", true);
+        model.addAttribute("friendRequests", account.getFriendRequests());
+        
         return "profile";
     }
     
@@ -34,25 +40,28 @@ public class ProfileController {
     public String profilePath(Model model, @PathVariable String path) {
         String ownUsername =  SecurityContextHolder.getContext().getAuthentication().getName();
         Account ownAccount = accountRepository.findByUsername(ownUsername);
+        
         Account account = accountRepository.findByPath(path);
         String username = account.getUsername();
+        
+        boolean requestSent = ownAccount.getFriends().contains(account)
+                || ownAccount.getFriendRequests().contains(account)
+                || account.getFriendRequests().contains(ownAccount);
+        boolean isOwnProfile = ownUsername.equals(username);
         
         model.addAttribute("title", "Profile: " + username);
         model.addAttribute("name", account.getName());
         model.addAttribute("username", "@" + username);
-        
-        boolean isNotFriend = !ownAccount.getFriends().contains(account)
-                && !ownAccount.getFriendRequests().contains(account)
-                && !account.getFriendRequests().contains(ownAccount)
-                && !ownUsername.equals(username);
-        
-        model.addAttribute("isNotFriend", isNotFriend);
+        model.addAttribute("requestSent", requestSent);
+        model.addAttribute("isOwnProfile", isOwnProfile);
         model.addAttribute("path", path);
+        model.addAttribute("friendRequests", ownAccount.getFriendRequests());
+        
         return "profile";
     }
     
-    @PostMapping("/profile/{path}")
-    public String friendRequest(@PathVariable String path) {
+    @PostMapping("/request/{path}")
+    public String sendFriendRequest(@PathVariable String path) {
         String ownUsername = SecurityContextHolder.getContext().getAuthentication().getName();
         Account ownAccount = accountRepository.findByUsername(ownUsername);
         Account account = accountRepository.findByPath(path);
@@ -69,5 +78,22 @@ public class ProfileController {
         }
         
         return "redirect:/profile/" + path;
+    }
+    
+    //--------------------------------------------------------
+    //--------------------------TODO--------------------------
+    //--------------------------------------------------------
+    @PostMapping("/accept/{path}")
+    public String accceptFriendRequest(@PathVariable String path) {
+        
+        
+        return "redirect:/profile";
+    }
+    
+    @PostMapping("/decline/{path}")
+    public String declineFriendRequest(@PathVariable String path) {
+        
+        
+        return "redirect:/profile";
     }
 }

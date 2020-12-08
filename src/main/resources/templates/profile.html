@@ -8,7 +8,14 @@
         <div th:replace="fragments/layout :: header"></div>
         <br/>
         <div class="container">
-            <h1 th:text="${username}">Logged in</h1>
+            <h1 th:text="${name}">Name</h1>
+            <h5 th:text="${username}">username</h5>
+
+            <div  th:if="${isNotFriend}">
+                <form th:action="@{/profile/{path}(path=${path})}" method="POST">
+                    <input type="submit" class="btn btn-primary" value="Friend request"/>
+                </form>
+            </div>
         </div>
     </body>
 </html>

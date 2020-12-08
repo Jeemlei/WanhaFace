@@ -3,6 +3,7 @@ package wanhaface.data;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,8 +23,8 @@ public class Account extends AbstractPersistable<Long> {
     private String password;
     private String path;
     
-    @ManyToMany
-    private List<Account> kaverit = new ArrayList<>();
-    @ManyToMany
-    private List<Account> kaveripyynnot = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<Account> friends = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<Account> friendRequests = new ArrayList<>();
 }

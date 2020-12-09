@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/security/tags">
+    <head th:replace="fragments/layout :: head(title=${title})" lang="en">
+        <meta charset="UTF-8" />
+        <title>Title</title>
+    </head>
+    <body style="background-color:#eee">
+        <div th:replace="fragments/layout :: header"></div>
+
+        <hr/>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-3">
+                    <h4>Search results:</h4>
+                </div>
+                <div class="col-3">
+                    <p th:if="${#lists.isEmpty(result)}">no matching results found...</p>
+                    <ul>
+                        <li th:each="account : ${result}">
+                            <b><span th:text="${account.name}">name</span> </b>
+                            <br/>
+                            (<a th:href="@{/profile/{path}(path=${account.path})}">@<span th:text="${account.username}">username</span></a>)
+                            <br/>
+                            <br/>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

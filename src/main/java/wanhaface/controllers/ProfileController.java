@@ -31,43 +31,12 @@ public class ProfileController {
     @GetMapping("/profile")
     public String profile(Model model) {
         setProfileAttributes(model, getOwnAccount().getPath());
-        
-//        Account account = getOwnAccount();
-//        String username = account.getUsername();
-//        
-//        model.addAttribute("title", "Profile: " + username);
-//        model.addAttribute("name", account.getName());
-//        model.addAttribute("username", "@" + username);
-//        model.addAttribute("requestSent", true);
-//        model.addAttribute("isOwnProfile", true);
-//        model.addAttribute("friendRequests", friendRequestRepository.findAllByToUsername(username));
-//        model.addAttribute("friends", account.getFriends());
-        
         return "profile";
     }
     
     @GetMapping("/profile/{path}")
     public String profilePath(Model model, @PathVariable String path) {
         setProfileAttributes(model, path);
-        
-//        Account ownAccount = getOwnAccount();
-//        String ownUsername = ownAccount.getUsername();
-//        Account account = accountRepository.findByPath(path);
-//        String username = account.getUsername();
-//        
-//        boolean requestSent = ownAccount.getFriends().contains(account)
-//                || friendRequestRepository.requestSent(ownUsername, username);
-//        boolean isOwnProfile = ownAccount.getUsername().equals(username);
-//        
-//        model.addAttribute("title", "Profile: " + username);
-//        model.addAttribute("name", account.getName());
-//        model.addAttribute("username", "@" + username);
-//        model.addAttribute("requestSent", requestSent);
-//        model.addAttribute("isOwnProfile", isOwnProfile);
-//        model.addAttribute("path", path);
-//        model.addAttribute("friendRequests", friendRequestRepository.findAllByToUsername(ownUsername));
-//        model.addAttribute("friends", account.getFriends());
-        
         return "profile";
     }
     
@@ -77,15 +46,16 @@ public class ProfileController {
         Account ownAccount = getOwnAccount();
         Account account = accountRepository.findByPath(path);
         
-        List<Account> ownFriends = ownAccount.getFriends();
+        boolean notFriends = !ownAccount.getFriends().contains(account);
+        boolean requestNotSent = !friendRequestRepository.requestSent(ownAccount.getUsername(), account.getUsername());
         
-        if (!ownFriends.contains(account)
-                && !friendRequestRepository.requestSent(ownAccount.getUsername(), account.getUsername())) {
-            friendRequestRepository.save(new FriendRequest(ownAccount.getUsername(), 
-                                                ownAccount.getName(),
-                                                ownAccount.getPath(),
-                                                account.getUsername(), 
-                                                new Date(System.currentTimeMillis())));
+        if (notFriends && requestNotSent) {
+            friendRequestRepository.save(
+                    new FriendRequest(ownAccount.getUsername(), 
+                                    ownAccount.getName(),
+                                    ownAccount.getPath(),
+                                    account.getUsername(), 
+                                    new Date(System.currentTimeMillis())));
         }
         
         return "redirect:/profile/" + path;

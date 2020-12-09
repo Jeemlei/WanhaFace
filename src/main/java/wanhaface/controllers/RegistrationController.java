@@ -1,6 +1,7 @@
 package wanhaface.controllers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import wanhaface.data.Account;
 import wanhaface.data.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +32,10 @@ public class RegistrationController {
     }
 
     @PostMapping("/register")
-    public String registerNewAccount(   @RequestParam String name,
-                                        @RequestParam String username,
-                                        @RequestParam String password,
-                                        @RequestParam String path) {
+    public String registerNewAccount(@RequestParam String name,
+                                    @RequestParam String username,
+                                    @RequestParam String password,
+                                    @RequestParam String path) {
         if (path.isEmpty() || path.trim().equals("")) {
             path = username;
         }
@@ -46,8 +47,11 @@ public class RegistrationController {
             return "redirect:/register";
         }
         
-        Account a = new Account(name, username, passwordEncoder.encode(password),
-                path, new ArrayList<Account>(), new ArrayList<Account>());
+        Account a = new Account(name,
+                                username,
+                                passwordEncoder.encode(password),
+                                path,
+                                new ArrayList<>());
         accountRepository.save(a);
         
         return "redirect:/profile";

@@ -25,6 +25,4 @@ public class Account extends AbstractPersistable<Long> {
     
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Account> friends = new ArrayList<>();
-    @ManyToMany(fetch = FetchType.LAZY)
-    private List<Account> friendRequests = new ArrayList<>();
 }

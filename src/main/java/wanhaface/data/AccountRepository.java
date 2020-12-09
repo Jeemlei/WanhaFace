@@ -14,5 +14,7 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     Account findByPath(String path);
     
     @Query("select count(a)>0 from Account a where a.username = ?1")
-    boolean checkIfExists(String username);
+    boolean checkIfUserExists(String username);
+    @Query("select count(a)>0 from Account a where a.path = ?1")
+    boolean checkIfPathExists(String path);
 }

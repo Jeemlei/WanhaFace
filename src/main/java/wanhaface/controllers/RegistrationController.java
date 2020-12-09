@@ -1,4 +1,4 @@
-package wanhaface.security;
+package wanhaface.controllers;
 
 import java.util.ArrayList;
 import wanhaface.data.Account;
@@ -35,12 +35,15 @@ public class RegistrationController {
                                         @RequestParam String username,
                                         @RequestParam String password,
                                         @RequestParam String path) {
-        if (accountRepository.checkIfExists(username)) {
-            return "redirect:/register";
-        }
-        
         if (path.isEmpty() || path.trim().equals("")) {
             path = username;
+        }
+        
+        //ADD ERROR MESSAGES!!!
+        
+        if (accountRepository.checkIfUserExists(username)
+                || accountRepository.checkIfPathExists(path)) {
+            return "redirect:/register";
         }
         
         Account a = new Account(name, username, passwordEncoder.encode(password),

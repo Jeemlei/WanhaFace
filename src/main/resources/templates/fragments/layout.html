@@ -11,19 +11,19 @@
             <br/>
             <div class="row">
                 <div class="col">
-                    <a th:href="@{/home}">Home</a>
+                    <a class="btn btn-outline-primary" th:href="@{/home}" role="button">Home</a>
                 </div>
                 <div class="col" sec:authorize="isAnonymous()">
-                    <a th:href="@{/register}">Register</a>
+                    <a class="btn btn-outline-secondary" th:href="@{/register}" role="button">Register</a>
                 </div>
                 <div class="col" sec:authorize="isAnonymous()">
-                    <a th:href="@{/profile}">Login</a>
+                    <a class="btn btn-outline-info" th:href="@{/profile}" role="button">Login</a>
                 </div>
                 <div class="col" sec:authorize="isAuthenticated()">
-                    <a th:href="@{/profile}">Profile</a>
+                    <a class="btn btn-outline-secondary" th:href="@{/profile}" role="button">Profile</a>
                 </div>
                 <div class="col" sec:authorize="isAuthenticated()">
-                    <a th:href="@{/logout}">Logout</a>
+                    <a class="btn btn-outline-info" th:href="@{/logout}" role="button">Logout</a>
                 </div>
             </div>
         </header>

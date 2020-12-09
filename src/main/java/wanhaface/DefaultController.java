@@ -1,5 +1,7 @@
 package wanhaface;
 
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +21,8 @@ public class DefaultController {
    
     @GetMapping("/home")
     public String home(Model model) {
-        if (SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && !(authentication instanceof AnonymousAuthenticationToken) && authentication.isAuthenticated()) {
             return "redirect:/profile";
         }
         model.addAttribute("title", "WanhaFace");

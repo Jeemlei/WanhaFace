@@ -10,7 +10,7 @@
         <header class="container" th:fragment="header">
             <br/>
             <div class="row">
-                <div class="col">
+                <div class="col" sec:authorize="isAnonymous()">
                     <a class="btn btn-outline-primary" th:href="@{/home}" role="button">Home</a>
                 </div>
                 <div class="col" sec:authorize="isAnonymous()">
@@ -18,6 +18,10 @@
                 </div>
                 <div class="col" sec:authorize="isAnonymous()">
                     <a class="btn btn-outline-info" th:href="@{/profile}" role="button">Login</a>
+                </div>
+                
+                <div class="col" sec:authorize="isAuthenticated()">
+                    <a class="btn btn-outline-primary" th:href="@{/search}" role="button">Search &#x1f50d;</a>
                 </div>
                 <div class="col" sec:authorize="isAuthenticated()">
                     <a class="btn btn-outline-secondary" th:href="@{/profile}" role="button">Profile</a>

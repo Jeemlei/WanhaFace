@@ -6,7 +6,9 @@
     </head>
     <body style="background-color:#eee">
         <div th:replace="fragments/layout :: header"></div>
-        <br/>
+
+        <hr/>
+
         <div class="container">
             <div class="row">
                 <div class="col-3">
@@ -19,27 +21,53 @@
                         </form>
                     </div>
                 </div>
+            </div>
 
+            <hr th:if="${isOwnProfile}"/>
+
+            <div class="row">
                 <div th:if="${isOwnProfile}" class="col">
                     <h4>Friend requests:</h4>
+                    <br/>
                     <ul>
-                        <li th:each="account : ${friendRequests}">
+                        <li th:each="request : ${friendRequests}">
                             <div class="row">
                                 <div class="col-3">
-                                    <span th:text="${account.name}">name</span> 
-                                    (<a th:href="@{/profile/{path}(path=${account.path})}">@<span th:text="${account.username}">username</span></a>)
+                                    <p th:text="${#dates.format(request.time, 'dd.MM.yyyy HH:mm')}">dd.MM.yyyy HH:mm</p>
                                 </div>
-                                <div class="col-2">
-                                    <form th:action="@{/accept/{path}(path=${account.path})}" method="POST">
+                                <div class="col-3">
+                                    <b><span th:text="${request.fromName}">name</span> </b>
+                                    (<a th:href="@{/profile/{path}(path=${request.fromPath})}">@<span th:text="${request.fromUsername}">username</span></a>)
+                                </div>
+                                <div class="col-3">
+                                    <form th:action="@{/accept/{path}(path=${request.fromPath})}" method="POST">
                                         <input type="submit" class="btn btn-success mb-2" value="Accept"/>
                                     </form>
-                                </div>
-                                <div class="col-1">
-                                    <form th:action="@{/decline/{path}(path=${account.path})}" method="POST">
+                                    <form th:action="@{/decline/{path}(path=${request.fromPath})}" method="POST">
                                         <input type="submit" class="btn btn-danger mb-2" value="Decline"/>
                                     </form>
                                 </div>
                             </div>
+                            <br/>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <hr/>
+
+            <div class="row">
+                <div class="col-3">
+                    <h4>Friends:</h4>
+                </div>
+                <div class="col-3">
+                    <ul>
+                        <li th:each="account : ${friends}">
+                            <b><span th:text="${account.name}">name</span> </b>
+                            <br/>
+                            (<a th:href="@{/profile/{path}(path=${account.path})}">@<span th:text="${account.username}">username</span></a>)
+                            <br/>
+                            <br/>
                         </li>
                     </ul>
                 </div>

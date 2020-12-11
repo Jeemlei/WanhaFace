@@ -16,7 +16,12 @@
                     <h1>Album of <span th:text="${name}">name</span></h1>
                 </div>
             </div>
-            <div th:if="${isOwnProfile}" class="row">
+            <div th:if="${isOwnProfile} and ${fullAlbum}" class="row">
+                <div class="col">
+                    <h6>Album is full: delete images to upload!</h6>
+                </div>
+            </div>
+            <div th:if="${isOwnProfile} and ${!fullAlbum}" class="row">
                 <div class="col">
                     <form th:action="@{/image/{username}(username=${username})}" method="POST" enctype="multipart/form-data">
                         <input type="file" name="file" />
@@ -29,10 +34,17 @@
             <div class="row" th:each="id : ${ids}">
                 <div class="col">
                     <img th:if="${!edit}" th:src="@{/image/{id}(id=${id})}" style="width: 500px; max-height: 800; overflow: hidden; margin: 10px"/>
-                    
+
                     <img th:if="${edit}" th:src="@{/image/{id}(id=${id})}" style="width: 250px; max-height: 400; overflow: hidden; margin-top: 15px"/>
+                </div>
+                <div class="col">
                     <form th:if="${edit}" th:action="@{/profile/setProfilePic/{id}(id=${id})}" method="POST">
-                        <input type="submit" class="btn btn-outline-success" value="Set as profile picture" style="margin-bottom: 30px"/>
+                        <input type="submit" class="btn btn-outline-success" value="Set as profile pic" style="margin-bottom: 30px"/>
+                    </form>
+                    <form th:if="${isOwnProfile}" th:action="@{/image/delete/{id}(id=${id})}" method="POST" onsubmit="return confirm('Do you really want to delete this image?');">
+                        <input th:if="${!edit}"  type="hidden" name="redirect" th:value="@{/images/{username}(username=${username})}"/>
+                        <input th:if="${edit}"  type="hidden" name="redirect" value="/profile/edit"/>
+                        <input type="submit" class="btn btn-outline-danger" value="Delete" style="margin-bottom: 30px"/>
                     </form>
                 </div>
             </div>

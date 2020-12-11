@@ -51,6 +51,8 @@ public class RegistrationController {
                                 username,
                                 passwordEncoder.encode(password),
                                 path,
+                                null,
+                                new ArrayList<>(),
                                 new ArrayList<>());
         accountRepository.save(a);
         

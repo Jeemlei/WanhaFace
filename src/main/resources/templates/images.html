@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/security/tags">
+    <head th:replace="fragments/layout :: head(title=${title})" lang="en">
+        <meta charset="UTF-8" />
+        <title>Title</title>
+    </head>
+    <body style="background-color:#eee">
+        <div th:replace="fragments/layout :: header"></div>
+
+        <hr/>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-4">
+                    <a class="btn btn btn-primary" th:href="@{/profile/{path}(path=${path})}" role="button" style="margin: 10px; margin-left: 0px">Back to profile</a>
+                    <h1>Album of <span th:text="${name}">name</span></h1>
+                </div>
+            </div>
+            <div th:if="${isOwnProfile}" class="row">
+                <div class="col">
+                    <form th:action="@{/image/{username}(username=${username})}" method="POST" enctype="multipart/form-data">
+                        <input type="file" name="file" />
+                        <input type="submit" value="Upload image"/>
+                    </form>
+                </div>
+            </div>
+            <div class="row" th:each="id : ${ids}">
+                <div class="col">
+                    <img th:if="${!edit}" th:src="@{/image/{id}(id=${id})}" style="width: 500px; max-height: 800; overflow: hidden; margin: 10px"/>
+                    
+                    <img th:if="${edit}" th:src="@{/image/{id}(id=${id})}" style="width: 250px; max-height: 400; overflow: hidden; margin-top: 15px"/>
+                    <form th:if="${edit}" th:action="@{/profile/setProfilePic/{id}(id=${id})}" method="POST">
+                        <input type="submit" class="btn btn-outline-success" value="Set as profile picture" style="margin-bottom: 30px"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

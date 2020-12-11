@@ -12,21 +12,53 @@
         <div class="container">
             <div class="row">
                 <div class="col-3">
+                    <img th:src="@{/images/profilepic/{username}(username=${username})}" style="width: 250px; max-height: 400; overflow: hidden; margin: 10px"/>
+                </div>
+                <div class="col-3">
                     <h1 th:text="${name}">Name</h1>
-                    <h5 th:text="${username}">username</h5>
+                    <h5 th:text="${atusername}">username</h5>
+                    <br/>
+                    <a th:if="${isOwnProfile}" class="btn btn-outline-info btn-sm" th:href="@{/profile/edit}" role="button">Edit profile picture</a>
 
                     <div th:if="${!requestSent} and ${!isOwnProfile}">
                         <form th:action="@{/request/{path}(path=${path})}" method="POST">
-                            <input type="submit" class="btn btn-primary" value="Friend request"/>
+                            <input type="submit" class="btn btn-primary btn-sm" value="Friend request"/>
                         </form>
                     </div>
                 </div>
             </div>
 
-            <hr th:if="${isOwnProfile}"/>
+            <hr/>
 
             <div class="row">
-                <div th:if="${isOwnProfile}" class="col">
+                <div class="col-3">
+                    <h4>Image album:</h4>
+                </div>
+                <div class="col-3">
+                    <a class="btn btn-info" th:href="@{/images/{username}(username=${username})}" role="button">View all images</a>
+                </div>
+            </div>
+
+            <br/>
+
+            <div th:if="${isOwnProfile}" class="row">
+                <div class="col-3">
+                    <h5>Upload new image:</h5>
+                </div>
+                <div class="col">
+
+                    <form th:action="@{/image/{username}(username=${username})}" method="POST" enctype="multipart/form-data">
+                        <input type="file" name="file" />
+                        <input type="submit" value="Upload image"/>
+                    </form>
+
+                </div>
+            </div>
+
+            <hr th:if="${isOwnProfile}"/>
+
+            <div th:if="${isOwnProfile}" class="row">
+                <div class="col">
                     <h4>Friend requests:</h4>
                     <br/>
                     <ul>

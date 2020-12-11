@@ -39,6 +39,7 @@ public class ImageService {
         return false;
     }
     
+    @Transactional
     public byte[] getImage(Long id) {
         return imageRepository.getOne(id).getBytes();
     }

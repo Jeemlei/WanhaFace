@@ -24,4 +24,5 @@ public class ImageObject extends AbstractPersistable<Long> {
     @Lob
     @Basic(fetch = FetchType.LAZY)
     private byte[] bytes;
+    
 }

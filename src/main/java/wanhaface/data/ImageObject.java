@@ -1,6 +1,8 @@
 package wanhaface.data;
 
+import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
@@ -20,5 +22,6 @@ public class ImageObject extends AbstractPersistable<Long> {
     private Account owner;
     
     @Lob
+    @Basic(fetch = FetchType.LAZY)
     private byte[] bytes;
 }

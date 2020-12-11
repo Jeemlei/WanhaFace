@@ -39,6 +39,10 @@ public class ImageService {
         return false;
     }
     
+    public void delete(Long id) {
+        imageRepository.deleteById(id);
+    }
+    
     public byte[] getImage(Long id) {
         return imageRepository.getOne(id).getBytes();
     }
@@ -62,8 +66,13 @@ public class ImageService {
         model.addAttribute("path", account.getPath());
         model.addAttribute("name", account.getName());
         model.addAttribute("isOwnProfile", isOwnProfile);
+        model.addAttribute("fullAlbum", fullAlbum(account));
         model.addAttribute("username", ownUsername);
         model.addAttribute("edit", false);
         model.addAttribute("ids", getImageIds(account));
+    }
+    
+    public boolean fullAlbum(Account account) {
+        return imageRepository.fullAlbum(account);
     }
 }

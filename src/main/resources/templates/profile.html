@@ -41,7 +41,7 @@
 
             <br/>
 
-            <div th:if="${isOwnProfile}" class="row">
+            <div th:if="${isOwnProfile} and ${!fullAlbum}" class="row">
                 <div class="col-3">
                     <h5>Upload new image:</h5>
                 </div>

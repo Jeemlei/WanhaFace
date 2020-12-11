@@ -57,4 +57,10 @@ public class ImageController {
         }
         return "redirect:" + redirect;
     }
+
+    @PostMapping("/image/delete/{id}")
+    public String uploadImage(@PathVariable Long id, @RequestParam String redirect) throws IOException {
+        imageService.delete(id);
+        return "redirect:" + redirect;
+    }
 }

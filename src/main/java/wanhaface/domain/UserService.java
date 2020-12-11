@@ -57,6 +57,7 @@ public class UserService {
         model.addAttribute("username", username);
         model.addAttribute("requestSent", requestSent);
         model.addAttribute("isOwnProfile", isOwnProfile);
+        model.addAttribute("fullAlbum", imageService.fullAlbum(account));
         model.addAttribute("path", path);
         model.addAttribute("friendRequests", friendRequestRepository.findAllByToUsername(ownUsername));
         model.addAttribute("friends", account.getFriends());
@@ -67,6 +68,7 @@ public class UserService {
         model.addAttribute("path", account.getPath());
         model.addAttribute("name", account.getName());
         model.addAttribute("isOwnProfile", true);
+        model.addAttribute("fullAlbum", imageService.fullAlbum(account));
         model.addAttribute("username", account.getUsername());
         model.addAttribute("edit", true);
         model.addAttribute("ids", imageService.getImageIds(account));

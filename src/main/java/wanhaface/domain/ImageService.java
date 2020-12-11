@@ -16,6 +16,7 @@ import wanhaface.data.ImageObjectRepository;
  *
  * @author Eemeli
  */
+@Transactional
 @Service
 public class ImageService {
     
@@ -25,7 +26,6 @@ public class ImageService {
     @Autowired
     private UserService userService;
     
-    @Transactional
     public boolean saveImage(Account owner, MultipartFile file) throws IOException {
         if (file.getContentType().equals("image/gif")
                 || file.getContentType().equals("image/jpeg")
@@ -39,7 +39,6 @@ public class ImageService {
         return false;
     }
     
-    @Transactional
     public byte[] getImage(Long id) {
         return imageRepository.getOne(id).getBytes();
     }

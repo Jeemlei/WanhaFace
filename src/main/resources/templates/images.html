@@ -20,6 +20,8 @@
                 <div class="col">
                     <form th:action="@{/image/{username}(username=${username})}" method="POST" enctype="multipart/form-data">
                         <input type="file" name="file" />
+                        <input th:if="${!edit}"  type="hidden" name="redirect" th:value="@{/images/{username}(username=${username})}"/>
+                        <input th:if="${edit}"  type="hidden" name="redirect" value="/profile/edit"/>
                         <input type="submit" value="Upload image"/>
                     </form>
                 </div>

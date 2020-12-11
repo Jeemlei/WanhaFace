@@ -49,6 +49,7 @@
 
                     <form th:action="@{/image/{username}(username=${username})}" method="POST" enctype="multipart/form-data">
                         <input type="file" name="file" />
+                        <input type="hidden" name="redirect" th:value="@{/images/{username}(username=${username})}"/>
                         <input type="submit" value="Upload image"/>
                     </form>
 

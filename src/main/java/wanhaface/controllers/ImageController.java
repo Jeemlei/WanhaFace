@@ -42,15 +42,19 @@ public class ImageController {
     @GetMapping("/images/profilepic/{username}")
     @ResponseBody
     public byte[] getProfilePic(@PathVariable String username) {
-        return imageService.getImage(userService.getAccountByUsername(username).getProfilePicId());
+        Long id = userService.getAccountByUsername(username).getProfilePicId();
+        if (id < 0L) {
+            return new byte[0];
+        }
+        return imageService.getImage(id);
     }
 
     @PostMapping("/image/{username}")
-    public String uploadImage(@PathVariable String username, @RequestParam("file") MultipartFile file) throws IOException {
+    public String uploadImage(@PathVariable String username, @RequestParam("file") MultipartFile file, @RequestParam String redirect) throws IOException {
         Account account = userService.getOwnAccount();
         if (account.getUsername().equals(username)) {
             imageService.saveImage(account, file);
         }
-        return "redirect:/profile/edit";
+        return "redirect:" + redirect;
     }
 }

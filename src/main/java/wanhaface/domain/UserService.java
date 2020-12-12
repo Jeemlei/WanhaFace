@@ -1,5 +1,6 @@
 package wanhaface.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,8 @@ import wanhaface.data.Account;
 import wanhaface.data.AccountRepository;
 import wanhaface.data.FriendRequest;
 import wanhaface.data.FriendRequestRepository;
+import wanhaface.data.Message;
+import wanhaface.data.MessageRepository;
 
 /**
  *
@@ -24,6 +27,9 @@ public class UserService {
 
     @Autowired
     private FriendRequestRepository friendRequestRepository;
+    
+    @Autowired
+    private MessageRepository messageRepository;
 
     @Autowired
     private ImageService imageService;

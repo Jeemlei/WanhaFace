@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/security/tags">
+    <head th:replace="fragments/layout :: head(title=${title})" lang="en">
+        <meta charset="UTF-8" />
+        <title>Title</title>
+    </head>
+    <body style="background-color:#eee">
+        <div th:replace="fragments/layout :: header"></div>
+
+        <hr/>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-4">
+                    <img th:src="@{/images/profilepic/{username}(username=${username})}" style="width: 100%; max-height: 400px; overflow: hidden; margin: 10px"/>
+                </div>
+                <div class="col-3">
+                    <h1 th:text="${name}">Name</h1>
+                    <h5 th:text="${atusername}">username</h5>
+                    <br/>
+                    <a class="btn btn btn-primary" th:href="@{/profile/{path}(path=${path})}" role="button" style="margin: 10px; margin-left: 0px">Back to profile</a>
+                </div>
+            </div>
+
+            <hr/>
+
+            <div class="row">
+                <div class="col">
+                    <form th:action="@{/wall/{username}/message(username=${username})}" method="POST">
+                        <textarea name="message" placeholder="Write message..." style="height: 100px; width: 70%; resize: none"></textarea>
+                        <br/>
+                        <input type="submit" class="btn btn-outline-success" value="Post message" style="margin: 10px"/>
+                    </form>
+                </div>
+            </div>
+
+            <br/>
+            <br/>
+
+            <div class="row">
+                <div class="col">
+                    <ul>
+                        <li th:each="message : ${messages}">
+                            <p>(<span th:text="${#dates.format(message.time, 'dd.MM.yyyy HH:mm')}">dd.MM.yyyy HH:mm</span>) <b><span th:text="${message.sender.name}"/></b>:</p>
+                            <b><span th:text="${message.content}"/></b>
+                            <br/>
+                            <br/>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -25,9 +25,18 @@ public class Account extends AbstractPersistable<Long> {
     private String path;
     private Long profilePicId;
     
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
     private List<ImageObject> images = new ArrayList<>();
     
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Account> friends = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
+    private List<Message> wall = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY)
+    private List<Message> sentMessages = new ArrayList<>();
+    
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<Message> likes = new ArrayList<>();
 }

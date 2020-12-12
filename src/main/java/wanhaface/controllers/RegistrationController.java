@@ -53,6 +53,9 @@ public class RegistrationController {
                                 path,
                                 -1L,
                                 new ArrayList<>(),
+                                new ArrayList<>(),
+                                new ArrayList<>(),
+                                new ArrayList<>(),
                                 new ArrayList<>());
         accountRepository.save(a);
         

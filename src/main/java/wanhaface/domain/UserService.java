@@ -71,7 +71,7 @@ public class UserService {
         model.addAttribute("fullAlbum", imageService.fullAlbum(account));
         model.addAttribute("username", account.getUsername());
         model.addAttribute("edit", true);
-        model.addAttribute("ids", imageService.getImageIds(account));
+        model.addAttribute("images", imageService.getImages(account));
     }
 
     public void setProfilePic(Long id) {

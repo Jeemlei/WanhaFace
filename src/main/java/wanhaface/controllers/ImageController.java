@@ -50,10 +50,13 @@ public class ImageController {
     }
 
     @PostMapping("/image/{username}")
-    public String uploadImage(@PathVariable String username, @RequestParam("file") MultipartFile file, @RequestParam String redirect) throws IOException {
+    public String uploadImage(@PathVariable String username, 
+                                @RequestParam("file") MultipartFile file,
+                                @RequestParam("description") String description,
+                                @RequestParam("redirect") String redirect) throws IOException {
         Account account = userService.getOwnAccount();
         if (account.getUsername().equals(username)) {
-            imageService.saveImage(account, file);
+            imageService.saveImage(description, account, file);
         }
         return "redirect:" + redirect;
     }

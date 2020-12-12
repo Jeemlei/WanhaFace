@@ -26,11 +26,12 @@ public class ImageService {
     @Autowired
     private UserService userService;
     
-    public boolean saveImage(Account owner, MultipartFile file) throws IOException {
+    public boolean saveImage(String description, Account owner, MultipartFile file) throws IOException {
         if (file.getContentType().equals("image/gif")
                 || file.getContentType().equals("image/jpeg")
                 || file.getContentType().equals("image/png")) {
             ImageObject img = new ImageObject();
+            img.setDescription(description);
             img.setOwner(owner);
             img.setBytes(file.getBytes());
             imageRepository.save(img);
@@ -47,13 +48,8 @@ public class ImageService {
         return imageRepository.getOne(id).getBytes();
     }
     
-    public List<Long> getImageIds(Account account) {
-        List<ImageObject> images = imageRepository.findByOwner(account);
-        List<Long> ids = new ArrayList<>();
-        for (ImageObject image : images) {
-            ids.add(image.getId());
-        }
-        return ids;
+    public List<ImageObject> getImages(Account account) {
+        return imageRepository.findByOwner(account);
     }
     
     public void setAlbumViewAttributes(Model model, String username) {
@@ -69,7 +65,7 @@ public class ImageService {
         model.addAttribute("fullAlbum", fullAlbum(account));
         model.addAttribute("username", ownUsername);
         model.addAttribute("edit", false);
-        model.addAttribute("ids", getImageIds(account));
+        model.addAttribute("images", getImages(account));
     }
     
     public boolean fullAlbum(Account account) {

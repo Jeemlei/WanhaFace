@@ -18,6 +18,8 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Entity
 public class ImageObject extends AbstractPersistable<Long> {
     
+    private String description;
+    
     @ManyToOne
     private Account owner;
     

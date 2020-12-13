@@ -47,6 +47,12 @@ public class RegistrationController {
             return "redirect:/register";
         }
         
+        path = path.replaceAll("/", "").trim();
+        
+        if (path.isEmpty()) {
+            path = username;
+        }
+        
         Account a = new Account(name,
                                 username,
                                 passwordEncoder.encode(password),

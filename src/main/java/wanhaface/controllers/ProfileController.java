@@ -46,8 +46,8 @@ public class ProfileController {
     
     @PostMapping("/request/{path}")
     public String sendFriendRequest(@PathVariable String path) {
-        path = path.replaceAll("#", "%23").replaceAll("/", "");
         userService.sendFriendRequest(path);
+        path = path.replaceAll("#", "%23").replaceAll("/", "");
         return "redirect:/profile/" + path;
     }
     

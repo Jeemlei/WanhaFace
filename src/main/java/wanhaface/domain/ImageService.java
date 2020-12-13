@@ -1,7 +1,6 @@
 package wanhaface.domain;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,6 +39,21 @@ public class ImageService {
         return false;
     }
     
+    //Jee jee kiva spagetti...
+    public void likeImage(Long id) {
+        ImageObject img = imageRepository.findById(id).get();
+        List<Account> likedBy = img.getLikedBy();
+        Account ownAccount = userService.getOwnAccount();
+        for (Account account : likedBy) {
+            if (account.getUsername().equals(ownAccount.getUsername())) {
+                return;
+            }
+        }
+        if (!img.getOwner().equals(ownAccount)) {
+            likedBy.add(ownAccount);
+        }
+    }
+    
     public void delete(Long id) {
         imageRepository.deleteById(id);
     }
@@ -64,6 +78,7 @@ public class ImageService {
         model.addAttribute("isOwnProfile", isOwnProfile);
         model.addAttribute("fullAlbum", fullAlbum(account));
         model.addAttribute("username", ownUsername);
+        model.addAttribute("albumOwner", username);
         model.addAttribute("edit", false);
         model.addAttribute("images", getImages(account));
     }

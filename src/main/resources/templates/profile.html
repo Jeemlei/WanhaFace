@@ -87,6 +87,17 @@
                     </ul>
                 </div>
             </div>
+            
+            <hr/>
+            
+            <div class="row">
+                <div class="col-3">
+                    <h4>Personal wall:</h4>
+                </div>
+                <div class="col-3">
+                    <a class="btn btn-info" th:href="@{/wall/{username}(username=${username})}" role="button">View user wall</a>
+                </div>
+            </div>
 
             <hr/>
 
@@ -104,17 +115,6 @@
                             <br/>
                         </li>
                     </ul>
-                </div>
-            </div>
-            
-            <hr/>
-            
-            <div class="row">
-                <div class="col-4">
-                    <h4>Personal wall:</h4>
-                </div>
-                <div class="col-3">
-                    <a class="btn btn-info" th:href="@{/wall/{username}(username=${username})}" role="button">View user wall</a>
                 </div>
             </div>
         </div>

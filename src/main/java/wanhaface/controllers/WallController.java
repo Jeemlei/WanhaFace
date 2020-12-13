@@ -35,4 +35,10 @@ public class WallController {
         messageService.newMessage(username, message);
         return "redirect:/wall/" + username;
     }
+    
+    @PostMapping("/message/like/{id}")
+    public String likeMessage(@PathVariable Long id, @RequestParam String redirect) {
+        messageService.likeMessage(id);
+        return "redirect:" + redirect;
+    }
 }

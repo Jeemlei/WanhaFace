@@ -29,10 +29,24 @@ public class MessageService {
     
     public void newMessage(String sendTo, String content) {
         messageRepository.save(new Message(content, 
-                                new Date(System.currentTimeMillis()), 
-                                new ArrayList<>(),
+                                new Date(System.currentTimeMillis()),
                                 userService.getOwnAccount(),
-                                userService.getAccountByUsername(sendTo)));
+                                userService.getAccountByUsername(sendTo), 
+                                new ArrayList<>()));
+    }
+    
+    public void likeMessage(Long id) {
+        Message message = messageRepository.findById(id).get();
+        List<Account> likedBy = message.getLikedBy();
+        Account ownAccount = userService.getOwnAccount();
+        for (Account account : likedBy) {
+            if (account.getUsername().equals(ownAccount.getUsername())) {
+                return;
+            }
+        }
+        if (!message.getOwner().equals(ownAccount)) {
+            likedBy.add(ownAccount);
+        }
     }
     
     public List<Message> getMessages(Account owner) {

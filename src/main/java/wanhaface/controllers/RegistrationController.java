@@ -56,6 +56,7 @@ public class RegistrationController {
                                 new ArrayList<>(),
                                 new ArrayList<>(),
                                 new ArrayList<>(),
+                                new ArrayList<>(),
                                 new ArrayList<>());
         accountRepository.save(a);
         

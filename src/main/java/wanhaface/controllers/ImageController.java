@@ -66,4 +66,10 @@ public class ImageController {
         imageService.delete(id);
         return "redirect:" + redirect;
     }
+    
+    @PostMapping("/image/like/{id}")
+    public String likeImage(@PathVariable Long id, @RequestParam String redirect) {
+        imageService.likeImage(id);
+        return "redirect:" + redirect;
+    }
 }

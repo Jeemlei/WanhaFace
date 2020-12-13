@@ -25,11 +25,14 @@ public class Account extends AbstractPersistable<Long> {
     private String path;
     private Long profilePicId;
     
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<Account> friends = new ArrayList<>();
+    
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
     private List<ImageObject> images = new ArrayList<>();
     
-    @ManyToMany(fetch = FetchType.LAZY)
-    private List<Account> friends = new ArrayList<>();
+    @ManyToMany(mappedBy = "likedBy", fetch = FetchType.LAZY)
+    private List<ImageObject> likedImages = new ArrayList<>();
     
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
     private List<Message> wall = new ArrayList<>();
@@ -37,6 +40,6 @@ public class Account extends AbstractPersistable<Long> {
     @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY)
     private List<Message> sentMessages = new ArrayList<>();
     
-    @ManyToMany(fetch = FetchType.LAZY)
-    private List<Message> likes = new ArrayList<>();
+    @ManyToMany(mappedBy = "likedBy", fetch = FetchType.LAZY)
+    private List<Message> likedMessages = new ArrayList<>();
 }

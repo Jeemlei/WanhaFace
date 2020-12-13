@@ -34,7 +34,6 @@ public class ProfileController {
     
     @GetMapping("/profile/{path}")
     public String profilePath(Model model, @PathVariable String path) {
-        path = path.replaceAll("#", "%23").replaceAll("/", "");
         userService.setProfileAttributes(model, path);
         return "profile";
     }

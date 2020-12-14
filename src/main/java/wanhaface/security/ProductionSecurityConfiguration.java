@@ -27,6 +27,7 @@ public class ProductionSecurityConfiguration extends WebSecurityConfigurerAdapte
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.headers().frameOptions().sameOrigin();
+        http.logout().logoutSuccessUrl("/home");
         
         http.authorizeRequests()
                 .antMatchers("/register").permitAll()

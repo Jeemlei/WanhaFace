@@ -27,6 +27,8 @@
             <div class="row">
                 <div class="col-6">
                     <img th:src="@{/image/{id}(id=${image.id})}" style="width: 250px; overflow: hidden; margin-top: 15px"/>
+                    <h5 style="margin-left: 2px">Description:</h5>
+                    <span th:text="${image.description}" style="margin: 5px; margin-left: 12px;"/>
                     <br/>
                     <p style="border-radius: 4px; width: 81px; margin: 4px; border-style: solid; border-width: thin; padding: 3px">Likes: <span th:text="${#lists.size(image.likedBy)}"/></p>
                 </div>

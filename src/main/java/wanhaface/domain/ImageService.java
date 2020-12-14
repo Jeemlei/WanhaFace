@@ -79,7 +79,7 @@ public class ImageService {
     }
     
     public ImageObject getOneImage(Long id) {
-        return imageRepository.getOne(id);
+        return imageRepository.findById(id).get();
     }
     
     public void delete(Long id) {

@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,6 +29,9 @@ public class Message extends AbstractPersistable<Long> {
     
     @ManyToOne
     private Account owner;
+    
+    @OneToMany(mappedBy = "message", fetch = FetchType.LAZY)
+    private List<Comment> comments = new ArrayList<>();
     
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Account> likedBy = new ArrayList<>();

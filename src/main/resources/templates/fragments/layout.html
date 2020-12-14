@@ -63,7 +63,7 @@
 
                 <div class="col-4 text-left" sec:authorize="isAuthenticated()">
                     <form class="search" th:action="@{/search}" method="POST">
-                        <input type="text" placeholder="Search..." name="string"/>
+                        <input type="text" placeholder="Search users..." name="string"/>
                         <button type="submit"><i class="fa fa-search"></i></button>
                     </form>
                 </div>

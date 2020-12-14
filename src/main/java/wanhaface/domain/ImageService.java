@@ -1,13 +1,19 @@
 package wanhaface.domain;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 import wanhaface.data.Account;
+import wanhaface.data.Comment;
+import wanhaface.data.CommentRepository;
 import wanhaface.data.ImageObject;
 import wanhaface.data.ImageObjectRepository;
 
@@ -21,6 +27,9 @@ public class ImageService {
     
     @Autowired
     private ImageObjectRepository imageRepository;
+    
+    @Autowired
+    private CommentRepository commentRepository;
     
     @Autowired
     private UserService userService;
@@ -54,11 +63,30 @@ public class ImageService {
         }
     }
     
+    public void postComment(Long image, String content) {
+        if (content.isEmpty()) return;
+        commentRepository.save(new Comment(true, 
+                                            content, 
+                                            new Date(System.currentTimeMillis()),
+                                            userService.getOwnAccount(), 
+                                            imageRepository.getOne(image),
+                                            null));
+    }
+    
+    public List<Comment> getComments(Long image) {
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("time").descending());
+        return commentRepository.findByImage(imageRepository.getOne(image), pageable);
+    }
+    
+    public ImageObject getOneImage(Long id) {
+        return imageRepository.getOne(id);
+    }
+    
     public void delete(Long id) {
         imageRepository.deleteById(id);
     }
     
-    public byte[] getImage(Long id) {
+    public byte[] getImageData(Long id) {
         return imageRepository.getOne(id).getBytes();
     }
     

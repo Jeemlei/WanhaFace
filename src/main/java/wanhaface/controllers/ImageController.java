@@ -35,8 +35,8 @@ public class ImageController {
 
     @GetMapping("/image/{id}")
     @ResponseBody
-    public byte[] getImage(@PathVariable Long id) {
-        return imageService.getImage(id);
+    public byte[] getImageData(@PathVariable Long id) {
+        return imageService.getImageData(id);
     }
 
     @GetMapping("/images/profilepic/{username}")
@@ -46,7 +46,15 @@ public class ImageController {
         if (id < 0L) {
             return new byte[0];
         }
-        return imageService.getImage(id);
+        return imageService.getImageData(id);
+    }
+    
+    @GetMapping("/image/{id}/{username}")
+    public String getImage(Model model, @PathVariable Long id, @PathVariable String username) {
+        userService.setProfileAttributes(model, userService.getAccountByUsername(username).getPath());
+        model.addAttribute("image", imageService.getOneImage(id));
+        model.addAttribute("comments", imageService.getComments(id));
+        return "image";
     }
 
     @PostMapping("/image/{username}")
@@ -71,5 +79,11 @@ public class ImageController {
     public String likeImage(@PathVariable Long id, @RequestParam String redirect) {
         imageService.likeImage(id);
         return "redirect:" + redirect;
+    }
+    
+    @PostMapping("/image/{id}/comment")
+    public String commentImage(@PathVariable Long id, @RequestParam String content, @RequestParam String redirect) {
+        imageService.postComment(id, content);
+        return "redirect:/image/" + id + "/" + redirect;
     }
 }

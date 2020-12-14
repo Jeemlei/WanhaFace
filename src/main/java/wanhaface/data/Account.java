@@ -40,6 +40,9 @@ public class Account extends AbstractPersistable<Long> {
     @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY)
     private List<Message> sentMessages = new ArrayList<>();
     
+    @OneToMany(mappedBy = "from", fetch = FetchType.LAZY)
+    private List<Comment> comments = new ArrayList<>();
+    
     @ManyToMany(mappedBy = "likedBy", fetch = FetchType.LAZY)
     private List<Message> likedMessages = new ArrayList<>();
 }

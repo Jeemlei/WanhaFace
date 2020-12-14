@@ -34,21 +34,19 @@
                 </div>
             </div>
 
-            <br/>
-            <br/>
-
             <div class="row">
                 <div class="col">
                     <ul>
                         <li th:each="message : ${messages}">
-                            <p>(<span th:text="${#dates.format(message.time, 'dd.MM.yyyy HH:mm')}">dd.MM.yyyy HH:mm</span>) <b><span th:text="${message.sender.name}"/></b>:</p>
+                            <p style="margin-top: 20px; margin-bottom: 5px">(<span th:text="${#dates.format(message.time, 'dd.MM.yyyy HH:mm')}">dd.MM.yyyy HH:mm</span>) <b><span th:text="${message.sender.name}"/></b>:</p>
                             <b><span th:text="${message.content}"/></b>
                             <br/>
-                            <p style="margin-top: 5px; margin-bottom: 0px">Likes: <span th:text="${#lists.size(message.likedBy)}"/></p>
+                            <p style="border-radius: 4px; width: 81px; margin: 4px; border-style: solid; border-width: thin; padding: 3px">Likes: <span th:text="${#lists.size(message.likedBy)}"/></p>
                             <form th:if="${!isOwnProfile}" th:action="@{/message/like/{id}(id=${message.id})}" method="POST">
                                 <input type="hidden" name="redirect" th:value="@{/wall/{username}(username=${username})}"/>
-                                <input type="submit" class="btn btn-primary" value="Like!" style="margin: 10px; margin-top: 0px; margin-left: 2px"/>
+                                <input type="submit" class="btn btn-primary" value="Like!" style="margin-top: 0px; margin-left: 2px; margin-bottom: 3px"/>
                             </form>
+                            <a class="btn btn btn-info" th:href="@{/message/{id}/{username}(id=${message.id}, username=${username})}" role="button"  style="margin-top: 0px; margin-left: 2px; margin-bottom: 10px">Comments</a>
                             <br/>
                         </li>
                     </ul>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/security/tags">
+    <head th:replace="fragments/layout :: head(title=${title})" lang="en">
+        <meta charset="UTF-8" />
+        <title>Title</title>
+    </head>
+    <body style="background-color:#eee">
+        <div th:replace="fragments/layout :: header"></div>
+
+        <hr/>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-4">
+                    <img th:src="@{/images/profilepic/{username}(username=${username})}" style="width: 100%; max-height: 400px; overflow: hidden; margin: 10px"/>
+                </div>
+                <div class="col-3">
+                    <h1 th:text="${name}">Name</h1>
+                    <h5 th:text="${atusername}">username</h5>
+                    <br/>
+                    <a class="btn btn btn-primary" th:href="@{/wall/{username}(username=${username})}" role="button" style="margin: 10px; margin-left: 0px">Back to user wall</a>
+                </div>
+            </div>
+
+            <hr/>
+
+            <div class="row">
+                <div class="col-6">
+                    <h3>Message:</h3>
+                    <p>(<span th:text="${#dates.format(message.time, 'dd.MM.yyyy HH:mm')}">dd.MM.yyyy HH:mm</span>) <b><span th:text="${message.sender.name}"/></b>:</p>
+                    <b><span th:text="${message.content}"/></b>
+                    <br/>
+                    <p style="border-radius: 4px; width: 81px; margin: 4px; border-style: solid; border-width: thin; padding: 3px">Likes: <span th:text="${#lists.size(message.likedBy)}"/></p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <form th:action="@{/message/{id}/comment(id=${message.id})}" method="POST">
+                        <textarea name="content" placeholder="Write comment..." style="height: 50px; width: 70%; resize: none"></textarea>
+                        <input type="hidden" name="redirect" th:value="${username}"/>
+                        <br/>
+                        <input type="submit" class="btn btn-outline-success" value="Post comment" style="margin: 10px"/>
+                    </form>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <h4>Comments:</h4>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <ul>
+                        <li th:each="comment : ${comments}">
+                            <p>(<span th:text="${#dates.format(comment.time, 'dd.MM.yyyy HH:mm')}">dd.MM.yyyy HH:mm</span>) <b><span th:text="${comment.from.name}"/></b>:</p>
+                            <b><span th:text="${comment.content}"/></b>
+                            <br/>
+                            <br/>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

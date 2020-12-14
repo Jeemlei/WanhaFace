@@ -48,11 +48,12 @@
                             <h5 th:if="${!edit}" style="margin-left: 2px">Description:</h5>
                             <span th:if="${!edit}" th:text="${image.description}" style="margin: 5px; margin-left: 12px;"/>
                             <br/>
-                            <p style="margin-top: 5px; margin-bottom: 0px">Likes: <span th:text="${#lists.size(image.likedBy)}"/></p>
+                            <p style="border-radius: 4px; width: 81px; margin: 4px; border-style: solid; border-width: thin; padding: 3px">Likes: <span th:text="${#lists.size(image.likedBy)}"/></p>
                             <form th:if="${!isOwnProfile}" th:action="@{/image/like/{id}(id=${image.id})}" method="POST">
                                 <input th:if="${!edit}"  type="hidden" name="redirect" th:value="@{/images/{username}(username=${albumOwner})}"/>
                                 <input type="submit" class="btn btn-primary" value="Like!" style="margin: 10px; margin-top: 0px; margin-left: 2px"/>
                             </form>
+                            <a th:if="${!edit}" class="btn btn btn-info" th:href="@{/image/{id}/{username}(id=${image.id}, username=${username})}" role="button"  style="margin-top: 0px; margin-left: 2px; margin-bottom: 10px">Comments</a>
                             <form th:if="${edit}" th:action="@{/profile/setProfilePic/{id}(id=${image.id})}" method="POST">
                                 <input type="submit" class="btn btn-outline-success" value="Set as profile pic" style="margin: 10px"/>
                             </form>
